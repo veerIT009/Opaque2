@@ -112,7 +112,15 @@ const Staff = (props) => {
                                                                 : "https://cdn-icons-png.flaticon.com/512/3845/3845824.png"
                                                         }
                                                         className="case-studies-card-img"
-                                                        alt=""
+                                                        alt="image"
+                                                        onError={({
+                                                            currentTarget,
+                                                        }) => {
+                                                            currentTarget.onerror =
+                                                                null; // prevents looping
+                                                            currentTarget.src =
+                                                                "https://cdn-icons-png.flaticon.com/512/3845/3845824.png";
+                                                        }}
                                                     />
                                                 </div>
                                                 <div className="card-details text-center pt-4">

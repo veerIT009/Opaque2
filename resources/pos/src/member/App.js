@@ -38,6 +38,7 @@ import Home from "./components/home/Home";
 import Registration from "./components/auth/registration/Registration";
 
 import Desclaimer from "../components/newMemberApp/Desclaimer";
+import SearchCards from "../components/newMemberApp/SearchCards";
 
 const MemberApp = (props) => {
     const {
@@ -121,6 +122,13 @@ const MemberApp = (props) => {
                         name="Desclaimer"
                         exact
                         element={<Desclaimer />}
+                    />
+
+                    <Route
+                        path="/search-results"
+                        name="search-results"
+                        exact
+                        element={<SearchCards />}
                     />
 
                     <Route

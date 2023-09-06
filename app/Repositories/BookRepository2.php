@@ -237,9 +237,7 @@ class BookRepository2 extends BaseRepository2 implements BookRepositoryInterface
                 }
             }
 
-            if ($this->checkBookItemIsEBOOK($item) && !isset($item['file'])) {
-                throw new UnprocessableEntityHttpException('E-Book is required.');
-            }
+
 
             if (isset($item['book_code'])) {
                 if (strlen($item['book_code']) > 10 || strlen($item['book_code']) < 10) {
@@ -675,27 +673,29 @@ class BookRepository2 extends BaseRepository2 implements BookRepositoryInterface
         }
 
         if (!empty($search['by_books'])) {
-            $query = filterByColumns($query, $search['search'], ['name', 'description']);
+            $query = filterByColumns($query, $search['search'], ['name']);
         }
 
-        if (!empty($search['is_featured'])) {
-            $query->where('is_featured', true);
-        }
+        // if (!empty($search['is_featured'])) {
+        //     $query->where('is_featured', true);
+        // }
 
         $count = $query->count();
 
-        if (!is_null($skip)) {
-            $query->skip($skip);
-        }
+        // if (!is_null($skip)) {
+        //     $query->skip($skip);
+        // }
 
-        if (!is_null($limit)) {
-            $query->limit($limit);
-        }
+        // if (!is_null($limit)) {
+        //     $query->limit($limit);
+        // }
 
         $bookRecords = $query->get();
 
         return [$bookRecords, $count];
     }
+
+
 
     /**
      * @param  array  $input

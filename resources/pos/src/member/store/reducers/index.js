@@ -38,6 +38,7 @@ import publisherReducer from "../../../admin/store/reducers/publisherReducer";
 import bookLanguageReducer from "../../../admin/store/reducers/bookLanguageReducer";
 import subscriptionLimitReducer from "./subscriptionLimitReducer";
 import isMemberRegisteredReducer from "./isMemberRegisteredReducer";
+import newBookSearchReducer from "./newBookSearchReducer";
 export default combineReducers({
     totalEsubAmount: totalEsubReducer,
     ebookSubscription: ebookSubscriptionReducer,
@@ -78,4 +79,5 @@ export default combineReducers({
     bookLanguage: bookLanguageReducer,
     subscriptionLimit: subscriptionLimitReducer,
     isMemberRegistered: isMemberRegisteredReducer,
+    newBookSearch: newBookSearchReducer,
 });

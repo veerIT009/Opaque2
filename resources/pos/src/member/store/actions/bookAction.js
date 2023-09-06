@@ -9,7 +9,6 @@ import { environment } from "../../../environment";
 import { setTotalRecord } from "./totalRecordAction";
 
 export const fetchBooksAll = () => async (dispatch) => {
-    dispatch(setLoading(true));
     await apiConfigWithoutToken
         .get(apiBaseURL.BOOK)
         .then((response) => {
@@ -19,7 +18,6 @@ export const fetchBooksAll = () => async (dispatch) => {
                     payload: response.data.data,
                 });
             }
-            dispatch(setLoading(false));
         })
         .catch(({ response }) => {
             if (response) {
@@ -30,11 +28,11 @@ export const fetchBooksAll = () => async (dispatch) => {
                     })
                 );
             }
-            dispatch(setLoading(false));
         });
 };
+
 export const fetchSingleBook = (id) => async (dispatch) => {
-    dispatch(setLoading(true));
+    console.log({ id });
     await apiConfigWithoutToken
         .get(apiBaseURL.BOOK + "/" + id)
         .then((response) => {
@@ -44,7 +42,6 @@ export const fetchSingleBook = (id) => async (dispatch) => {
                     payload: response.data.data,
                 });
             }
-            dispatch(setLoading(false));
         })
         .catch(({ response }) => {
             if (response) {
@@ -55,12 +52,10 @@ export const fetchSingleBook = (id) => async (dispatch) => {
                     })
                 );
             }
-            dispatch(setLoading(false));
         });
 };
 
 export const fetchBooks = () => async (dispatch) => {
-    dispatch(setLoading(true));
     await apiConfig
         .get(apiBaseURL.BOOK)
         .then((response) => {
@@ -70,7 +65,6 @@ export const fetchBooks = () => async (dispatch) => {
                     payload: response.data.data,
                 });
             }
-            dispatch(setLoading(false));
         })
         .catch(({ response }) => {
             if (response) {
@@ -81,7 +75,6 @@ export const fetchBooks = () => async (dispatch) => {
                     })
                 );
             }
-            dispatch(setLoading(false));
         });
 };
 
@@ -122,7 +115,7 @@ export const fetchBooksByNameOrAuthors = (param) => async (dispatch) => {
         .then((response) => {
             if (response) {
                 dispatch({
-                    type: bookActionType.SEARCH_BOOKS,
+                    type: "NEW_BOOK_SEARCH",
                     payload: response.data.data.books,
                 });
                 if (response.data.totalRecords === 0) {

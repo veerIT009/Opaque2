@@ -69,6 +69,33 @@ const Footer = () => {
                         />
                     </div>
                 </div>
+                <div className="row text-center text-md-left justify-content-around pt-5">
+                    <div className="px-4 col-md-4 col-sm-12">
+                        <h5 className="pb-2">
+                            राष्ट्रमाता कस्तुरबा वाचनालय ,सदर
+                        </h5>
+                        <p className="m-0">Incharge :- Manjushree Kanhere </p>
+                        <p className="m-0 pb-2">
+                            Contact no : 9422880817,8007381362
+                        </p>
+                    </div>
+                    <div className="px-4 col-md-4 col-sm-12">
+                        <h5 className="pb-2">
+                            स्व. कुंदनलाल गुप्त वाचनालय,इमामवाडा
+                        </h5>
+                        <p className="m-0">Incharge :- Manjushree Kanhere </p>
+                        <p className="m-0 pb-2">
+                            Contact no : 9422880817,8007381362
+                        </p>
+                    </div>
+                    <div className="px-4 col-md-4 col-sm-12">
+                        <h5 className="pb-2">
+                            पंडित दिनदयाल उपाध्याय वाचनालय,लक्ष्मीनगर
+                        </h5>
+                        <p className="m-0">Incharge :- Kailash Vandudhe </p>
+                        <p className="m-0 pb-2">Contact no : +917972804160</p>
+                    </div>
+                </div>
                 <footer className="border-top">
                     <p className="text-center  pt-4">
                         © 2023

@@ -39,7 +39,7 @@ function getLogoUrl(): string
 
     $appLogo = Setting::where('key', '=', 'logo')->first();
 
-  
+
     return asset($appLogo->logo);
 }
 
@@ -250,15 +250,21 @@ function explode_trim_remove_empty_values_from_array($str, $delimiter = ',')
  */
 function filterByColumns(&$query, $keywords, $columns)
 {
+
     $keywords = explode_trim_remove_empty_values_from_array($keywords, ' ');
 
-    $query->where(function (Builder $query) use ($keywords, $columns) {
+    $resultString = "";
+    $query->where(function (Builder $query) use ($keywords, $columns, &$resultString) {
         foreach ($keywords as $keyword) {
+            $resultString .= $keyword;
             foreach ($columns as $column) {
-                $query->orWhereRaw("lower($column) LIKE ?", ['%' . trim(strtolower($keyword)) . '%']);
+                $query->whereRaw("LOWER($column) LIKE ?", [trim(strtolower($keyword)) . '%']);
             }
         }
     });
+
+    // $query->whereRaw("LOWER($columns) LIKE ?", strtolower($keywords));
+    // dd($query);
 
     return $query;
 }

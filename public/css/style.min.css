@@ -41,83 +41,6 @@
         "Liberation Mono", "Courier New", monospace;
 }
 
-.card {
-    border: unset !important;
-}
-
-.text-center {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-}
-
-.row {
-    display: flex;
-    flex-direction: row;
-}
-
-.column {
-    display: flex;
-    flex-direction: column;
-}
-
-
-.s1 {
-    flex: 1;
-}
-
-.s2 {
-    flex: 2;
-}
-
-.s3 {
-    flex: 3;
-}
-
-.s4 {
-    flex: 4;
-}
-
-.s5 {
-    flex: 5;
-}
-
-.s6 {
-    flex: 6;
-}
-
-.s7 {
-    flex: 7;
-}
-
-.s8 {
-    flex: 8;
-}
-
-.s9 {
-    flex: 9;
-}
-
-.s10 {
-    flex: 10;
-}
-
-.s11 {
-    flex: 11;
-}
-
-.s12 {
-    flex: 12;
-}
-
-.center {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-}
-
 *,
 :after,
 :before {
@@ -11042,7 +10965,6 @@ body.sidebar-open:before {
     width: auto;
     object-fit: contain;
     max-width: 100%;
-    display: flex;
 }
 
 .case-studies .card-desc-box {
@@ -11883,7 +11805,7 @@ body:not(.frontend) .image__holder .dropdown .image__dropdown-menu.dropdown-menu
     white-space: nowrap;
 }
 
-body div:not(.admin-wrapper) #books-section .search-bar .wrapper,
+body div:not(.admin-wrapper) #books-section .searchByBook input,
 body div:not(.admin-wrapper) #books-section .form-select {
     border: 1px solid #ced4da !important;
     border-radius: 0.313rem !important;
@@ -12009,11 +11931,11 @@ button.btn.erp:hover {
         z-index: 9999;
         box-shadow: 0px 90px 100px 0px rgba(0, 0, 0, 0.1);
     } */
+
     body .search-bar .wrapper>div:nth-child(2) {
-        right: 0px;
+        left: -97px !important;
         width: calc(100% + 100px);
     }
-
 
     .frontend .navbar .navbar-menu-wrapper.navbar-collapse.show button.navbar-toggler:not(.close-button) {
         display: none;
@@ -14069,15 +13991,6 @@ body noscript {
         .et_pb_row {
             width: 86%;
         }
-
-        body .search-bar .wrapper {
-            position: unset;
-        }
-
-        .search-bar .haPHsm {
-            position: unset;
-            height: 46px;
-        }
     }
 
     @media only screen and (max-width: 479px) {
@@ -14621,7 +14534,7 @@ nav#navbar {
 
 #book_search_home_page_form {
     padding: 0px;
-    z-index: 9;
+    z-index: 1;
     position: relative;
 }
 
@@ -16541,16 +16454,141 @@ a:focus {
     box-shadow: inset 0px 0 30px 0px rgba(36, 10, 3, 0.5), 10px 0 8px 0px rgba(0, 0, 0, 0.4);
 }
 
-<<<<<<< Updated upstream
 #book_search_home_page_form {
     z-index: 9;
 }
-=======
-.card.color-cards {
-    padding: 15px;
+
+.rpv-core__tooltip-body * {
+    color: #fff !important;
 }
 
-.navbar-brand-wrapper img {
-    width: 215px;
+#book_search_home_page_form input.form-control::placeholder {
+    opacity: 1;
+    color: #000;
+    font-size: 14px;
 }
->>>>>>> Stashed changes
+
+#book_search_home_page_form input.form-control {
+    height: 44px;
+    border: 0px !important;
+    min-height: unset;
+    position: relative;
+    top: 0px;
+    border-radius: 12px !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    padding: 0px 13px !IMPORTANT;
+    color: #000;
+    box-shadow: unset !IMPORTANT;
+}
+
+.form-result {
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 1px;
+}
+
+.form-result span {
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.floating-menu {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #C27B7F;
+    position: fixed;
+    bottom: 35px;
+    right: 35px;
+    z-index: 999;
+}
+
+.floating-menu input {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.floating-menu .plus-icon {
+    transform: rotate(135deg);
+}
+
+.floating-menu .floating-nav li:nth-child(1) {
+    transform: translatey(-48px);
+}
+
+.floating-menu .floating-nav li:nth-child(2) {
+    transform: translatey(-88px);
+}
+
+.floating-menu .floating-nav li:nth-child(3) {
+    transform: translatey(-128px);
+}
+
+.floating-menu .floating-nav li:nth-child(4) {
+    transform: translatey(-168px);
+}
+
+.floating-menu .plus-icon {
+    transform: rotate(0);
+}
+
+.floating-menu>.plus-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    line-height: 1;
+    color: #fff;
+    background: #C27B7F;
+    border-radius: 50%;
+    transform: rotate(0);
+    transition: all 0.5s ease;
+    pointer-events: none;
+    position: absolute;
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.2);
+}
+
+.floating-menu>.floating-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+.floating-menu>.floating-nav li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #C27B7F;
+    cursor: pointer;
+    position: absolute;
+    transition: all 0.5s ease;
+}
+
+.floating-menu>.floating-nav li span {
+    font-size: 14px;
+    line-height: 1;
+    color: #fff;
+}
+
+.form-result {
+    max-height: 200px;
+    overflow-y: scroll;
+}

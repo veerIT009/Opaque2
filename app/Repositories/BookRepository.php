@@ -25,6 +25,7 @@ use App\Exceptions\ApiOperationFailedException;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Container\Container as Application;
 use App\Repositories\Contracts\BookRepositoryInterface;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
@@ -237,9 +238,9 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 }
             }
 
-            if ($this->checkBookItemIsEBOOK($item) && !isset($item['file'])) {
-                throw new UnprocessableEntityHttpException('E-Book is required.');
-            }
+            // if ($this->checkBookItemIsEBOOK($item) && !isset($item['file'])) {
+            //     throw new UnprocessableEntityHttpException('E-Book is required.');
+            // }
 
             if (isset($item['book_code'])) {
                 if (strlen($item['book_code']) > 10 || strlen($item['book_code']) < 10) {
@@ -340,11 +341,17 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 }
 
                 if (isset($bookItem['file'])) {
-                    $item->file_name = ImageTrait::makeAttachment(
+                    /*  $item->file_name = ImageTrait::makeAttachment(
                         $bookItem['file'],
                         "ebooks",
                         config('app.media_disc')
-                    );
+                    ); */
+                    $fileName = time() . '.' . $bookItem['file']->extension();
+                    $folderName = time();
+
+                    $bookItem['file']->storeAs($folderName, $fileName, 'parent_disk');
+
+                    $item->file_name = $fileName;
                 }
 
                 if (isset($bookItem['pdf_preview_file'])) {
@@ -411,21 +418,22 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             }
 
             if ($this->checkBookItemIsEBOOK($bookItem) && !empty($bookItem['file'])) {
-                $item->file_name = ImageTrait::makeAttachment(
-                    $bookItem['file'],
-                    "ebooks",
-                    config('app.media_disc')
-                );
+                $fileName = time() . '.' . $bookItem['file']->extension();
+                $folderName = time();
+
+                $bookItem['file']->storeAs($folderName, $fileName, 'parent_disk');
+
+                $item->file_name = $fileName;
             }
 
 
-            // if (isset($bookItem['file'])) {
-            //     $item->file_name = ImageTrait::makeAttachment(
-            //         $bookItem['file'],
-            //         "ebooks",
-            //         config('app.media_disc')
-            //     );
-            // }
+            if (isset($bookItem['pdf_preview_file'])) {
+                $item->pdf_preview_file = ImageTrait::makeAttachment(
+                    $bookItem['pdf_preview_file'],
+                    "PDFPreview",
+                    config('app.media_disc')
+                );
+            }
 
             $item->book_code = isset($bookItem['book_code']) ? $bookItem['book_code'] : $this->generateUniqueBookCode();
             $item->edition = isset($bookItem['edition']) ? $bookItem['edition'] : '';
@@ -667,6 +675,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     public function searchBooks($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
         $query = Book::query();
+
+
         if (!empty($search['by_authors'])) {
             $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
             $query->whereHas('authors', function (Builder $query) use ($keywords) {
@@ -675,22 +685,40 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         }
 
         if (!empty($search['by_books'])) {
-            $query = filterByColumns($query, $search['search'], ['name', 'description']);
+            // $query = filterByColumns($query, $search['search'], ['name']);
+            $query = Book::where('name', 'like', '%' . $search['search'] . '%');
+
+            if (!empty($search['library_id'])) {
+                $query->where("library_id", "=", $search['library_id']);
+            }
+
+            // if (!empty($search['genre_id'])) {
+            //     $query->where("genre_id", "=", $search['genre_id']);
+            // }
+            // if (!empty($search['publisher_id'])) {
+            //     $query->where("publisher_id", "=", $search['publisher_id']);
+            // }
+            // if (!empty($search['author_id'])) {
+            //     $query->where("author_id", "=", $search['author_id']);
+            // }
+            // if (!empty($search['language_id'])) {
+            //     $query->where("language_id", "=", $search['language_id']);
+            // }
         }
 
-        if (!empty($search['is_featured'])) {
-            $query->where('is_featured', true);
-        }
+        // if (!empty($search['is_featured'])) {
+        //     $query->where('is_featured', true);
+        // }
 
         $count = $query->count();
 
-        if (!is_null($skip)) {
-            $query->skip($skip);
-        }
+        // if (!is_null($skip)) {
+        //     $query->skip($skip);
+        // }
 
-        if (!is_null($limit)) {
-            $query->limit($limit);
-        }
+        // if (!is_null($limit)) {
+        //     $query->limit($limit);
+        // }
 
         $bookRecords = $query->get();
 

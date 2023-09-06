@@ -1,8 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { connect } from "react-redux";
-import { useNavigate } from "react-router";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { connect, useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router";
 
-import { fetchBooksAll } from "../../member/store/actions/bookAction";
+import {
+    fetchBooksAll,
+    fetchBooksByNameOrAuthors,
+} from "../../member/store/actions/bookAction";
 import ProgressBar from "../../shared/progress-bar/ProgressBar";
 import { getCurrentMember } from "../../shared/sharedMethod";
 
@@ -15,6 +18,7 @@ import { fetchPublishersWithout } from "../../admin/store/actions/publisherActio
 import { fetchAuthorsWithoutToken } from "../../member/store/actions/authorAction";
 import { fetchBookLanguagesWithout } from "../../admin/store/actions/bookLanguageAction";
 import libraryStatus from "./libraryStatus.json";
+import { isEmpty } from "lodash";
 
 function Items({ currentItems: books, handleDetails }) {
     return books ? (
@@ -51,6 +55,7 @@ function Items({ currentItems: books, handleDetails }) {
                                 <div className="card-image">
                                     <img
                                         // src="images/Group95.svg"
+                                        loading="lazy"
                                         src={
                                             book.image_path
                                                 ? book.image_path
@@ -58,6 +63,11 @@ function Items({ currentItems: books, handleDetails }) {
                                         }
                                         className="case-studies-card-img"
                                         alt=""
+                                        onError={({ currentTarget }) => {
+                                            currentTarget.onerror = null; // prevents looping
+                                            currentTarget.src =
+                                                "https://cdn-icons-png.flaticon.com/512/3845/3845824.png";
+                                        }}
                                     />
                                 </div>
                                 <div className="card-details text-center pt-3">
@@ -84,7 +94,22 @@ function Items({ currentItems: books, handleDetails }) {
                                     >
                                         <div className="d-flex flex-column align-items-center library_badge">
                                             <span className="badge badge-info">
-                                                {book?.items[0]?.format === 3
+                                                {!isEmpty(
+                                                    book?.items.find(
+                                                        (item) =>
+                                                            item.format === 3
+                                                    ) &&
+                                                        book?.items.find(
+                                                            (item) =>
+                                                                item.format ===
+                                                                1
+                                                        )
+                                                )
+                                                    ? "E-Book / Book"
+                                                    : book?.items.find(
+                                                          (item) =>
+                                                              item.format === 3
+                                                      )
                                                     ? "E-Book"
                                                     : "Book"}
                                             </span>
@@ -141,6 +166,7 @@ function Items({ currentItems: books, handleDetails }) {
 
 const BookList = (props) => {
     const {
+        fetchBooksByNameOrAuthors,
         books,
         goTo,
         genres,
@@ -149,11 +175,15 @@ const BookList = (props) => {
         filteredBooks,
         setFilteredBooks,
         bookLanguage,
+        newBookSearch,
+        skip,
+        setSkip,
+        toPage,
+        setToPage,
     } = props;
     const [filter, setFilter] = useState("book");
     const [isSpinner, setIsSpinner] = useState(true);
     const navigate = useNavigate();
-
     const itemsPerPage = 12;
     const [itemOffset, setItemOffset] = useState(0);
     const endOffset = itemOffset + itemsPerPage;
@@ -162,12 +192,15 @@ const BookList = (props) => {
     const pageCount = parseInt(Math.ceil(filteredBooks.length / itemsPerPage));
 
     const [value, setValue] = useState("");
-    const [toPage, setToPage] = useState(0);
+
     const [genreId, setGenreId] = useState("");
     const [publisherId, setPublisherId] = useState("");
     const [authorId, setAuthorId] = useState("");
     const [languageId, setLanguageId] = useState("");
     const [libraryId, setLibraryId] = useState("");
+    const [formatId, setFormatId] = useState("");
+    const [inputText, setInputText] = useState("");
+    const dispatch = useDispatch();
 
     const handlePageClick = (event) => {
         window.scroll({ top: 0, behavior: "smooth" });
@@ -199,7 +232,6 @@ const BookList = (props) => {
     const genreOnChange = (e) => {
         setGenreId(e.target.value);
     };
-
     const publisherOnChange = (e) => {
         setPublisherId(e.target.value);
     };
@@ -212,9 +244,28 @@ const BookList = (props) => {
     const libraryOnChange = (e) => {
         setLibraryId(e.target.value);
     };
+    const formatOnChange = (e) => {
+        setFormatId(e.target.value);
+    };
 
     useEffect(() => {
         let fb = [];
+        if (formatId) {
+            if (fb.length) {
+                fb = fb.filter(
+                    (book) => book.library_id === parseInt(formatId)
+                );
+                setFilteredBooks(fb);
+            } else {
+                fb = books.filter((book) =>
+                    book.items.find(
+                        (book) => book.format === parseInt(formatId)
+                    )
+                );
+                setFilteredBooks(fb);
+            }
+            setToPage(0);
+        }
         if (libraryId) {
             if (fb.length) {
                 fb = fb.filter(
@@ -227,17 +278,17 @@ const BookList = (props) => {
                 );
                 setFilteredBooks(fb);
             }
+            setToPage(0);
         }
         if (genreId) {
             if (fb.length) {
                 fb = fb.filter((book) => book.genres[0].id == genreId);
                 setFilteredBooks(fb);
-                setToPage(pageCount);
             } else {
                 fb = books.filter((book) => book.genres[0].id == genreId);
                 setFilteredBooks(fb);
-                setToPage(pageCount);
             }
+            setToPage(0);
         }
         if (publisherId) {
             if (fb.length) {
@@ -255,6 +306,7 @@ const BookList = (props) => {
                 );
                 setFilteredBooks(fb);
             }
+            setToPage(0);
         }
         if (authorId) {
             if (fb.length) {
@@ -281,6 +333,7 @@ const BookList = (props) => {
                 );
                 setFilteredBooks(fb);
             }
+            setToPage(0);
         }
         if (authorId && genreId) {
             if (fb.length) {
@@ -298,6 +351,7 @@ const BookList = (props) => {
                 );
                 setFilteredBooks(fb);
             }
+            setToPage(0);
         }
         if (languageId && genreId) {
             if (fb.length) {
@@ -317,6 +371,7 @@ const BookList = (props) => {
                 );
                 setFilteredBooks(fb);
             }
+            setToPage(0);
         }
         if (publisherId && genreId) {
             if (fb.length) {
@@ -336,6 +391,7 @@ const BookList = (props) => {
                 );
                 setFilteredBooks(fb);
             }
+            setToPage(0);
         }
         if (publisherId && authorId) {
             if (fb.length) {
@@ -355,6 +411,7 @@ const BookList = (props) => {
                 );
                 setFilteredBooks(fb);
             }
+            setToPage(0);
         }
         if (publisherId && languageId) {
             if (fb.length) {
@@ -374,6 +431,7 @@ const BookList = (props) => {
                 );
                 setFilteredBooks(fb);
             }
+            setToPage(0);
         }
         if (languageId && authorId) {
             if (fb.length) {
@@ -393,6 +451,7 @@ const BookList = (props) => {
                 );
                 setFilteredBooks(fb);
             }
+            setToPage(0);
         }
         if (genreId && publisherId && authorId && languageId) {
             if (fb.length) {
@@ -416,6 +475,7 @@ const BookList = (props) => {
                 );
                 setFilteredBooks(fb);
             }
+            setToPage(0);
         }
 
         // console.log({
@@ -426,18 +486,66 @@ const BookList = (props) => {
         //     languageId,
         //     libraryId,
         // });
-    }, [genreId, publisherId, authorId, languageId, libraryId]);
+    }, [genreId, publisherId, authorId, languageId, libraryId, formatId]);
+
+    useEffect(() => {
+        let fb = [];
+        if (location.origin.includes("dindayalupadhyay")) {
+            setLibraryId(111);
+        } else if (location.origin.includes("kundanlalgupta")) {
+            setLibraryId(222);
+        } else {
+            setLibraryId(333);
+        }
+        setFilteredBooks(fb);
+    }, [location.hash]);
 
     const itemsOptions = {
         currentItems,
         handleDetails,
     };
-    const handleOnSearch = (string, results) => {
-        // onSearch will have as the first callback parameter
-        // the string searched and for the second the results.
-        // console.log(string, results);
-        setValue(string);
-    };
+    // const handleOnSearch = useCallback(
+    //     (string) => {
+    //         if (string.length) {
+    //             fetchBooksByNameOrAuthors(
+    //                 `?search=${string}&limit=&${
+    //                     filter === "book" ? "by_books=1" : "by_authors=1"
+    //                 }&skip=0&genre_id=${genreId}&publisher_id=${publisherId}&author_id=${authorId}&language_id=${authorId}&format=${formatId}&library_id=${libraryId}`
+    //             );
+    //         } else {
+    //             dispatch({ type: "NEW_BOOK_SEARCH", payload: [] });
+    //         }
+    //         // console.log(string, results, filter);
+    //         setValue(string);
+    //     },
+    //     [
+    //         filter,
+    //         genreId,
+    //         publisherId,
+    //         authorId,
+    //         languageId,
+    //         libraryId,
+    //         formatId,
+    //         // inputText,
+    //     ]
+    // );
+
+    const handleOnSearch = useCallback(
+        (string) => {
+            if (string.length) {
+                fetchBooksByNameOrAuthors(
+                    `?search=${string}&limit=&${
+                        filter === "book" ? "by_books=1" : "by_authors=1"
+                    }&skip=0`
+                );
+            } else {
+                dispatch({ type: "NEW_BOOK_SEARCH", payload: [] });
+            }
+            // console.log(string, results, filter);
+            setValue(string);
+        },
+        [filter]
+    );
 
     const handleOnSelect = (item) => {
         // the item selected
@@ -446,7 +554,23 @@ const BookList = (props) => {
             filter === "book"
                 ? item.name.replaceAll(" ", "")
                 : item.authors_name.replaceAll(" ", "");
-        goTo("/search/" + filter + "&" + value);
+        goTo(
+            "/search/" +
+                filter +
+                "&" +
+                value +
+                "/" +
+                item.id +
+                "/" +
+                item.library_id
+        );
+        dispatch({ type: "NEW_BOOK_SEARCH", payload: [] });
+        setGenreId("");
+        setPublisherId("");
+        setAuthorId("");
+        setLanguageId("");
+        setLanguageId("");
+        setFormatId("");
     };
 
     const handleFilter = (e) => {
@@ -455,30 +579,60 @@ const BookList = (props) => {
 
     const formatResult = (item) => {
         return (
-            // <>
-            //     {filter === "book" ? (
-            //         <span style={{ display: "block", textAlign: "left" }}>
-            //             <i className="fa fa-book nav-icons pr-2"></i>{" "}
-            //             {item.name}
-            //         </span>
-            //     ) : (
-            //         <span style={{ display: "block", textAlign: "left" }}>
-            //             <i className="fa fa-book nav-icons pr-2"></i>{" "}
-            //             {item.authors_name}
-            //         </span>
-            //     )}
-            // </>
-            <span style={{ display: "block", textAlign: "left" }}>
-                <i className="fa fa-book nav-icons pr-2"></i> {item.name}
-            </span>
+            <div className="form-result">
+                {item.length
+                    ? item.map((book, i) => {
+                          return filter === "book" ? (
+                              <span
+                                  key={i}
+                                  style={{
+                                      display: "block",
+                                      textAlign: "left",
+                                  }}
+                                  onClick={() => handleOnSelect(book)}
+                              >
+                                  <i className="fa fa-book nav-icons pr-2"></i>{" "}
+                                  {book.name}
+                              </span>
+                          ) : (
+                              <span
+                                  key={i}
+                                  style={{
+                                      display: "block",
+                                      textAlign: "left",
+                                  }}
+                                  onClick={() => handleOnSelect(book)}
+                              >
+                                  <i className="fa fa-book nav-icons pr-2"></i>{" "}
+                                  {book.authors_name}
+                              </span>
+                          );
+                      })
+                    : null}
+            </div>
         );
     };
-
-    // console.log({ books, publishers, genres, authors, bookLanguage });
 
     useEffect(() => {
         setTimeout(() => setIsSpinner(false), 2000);
     }, []);
+
+    useEffect(() => {
+        dispatch({ type: "NEW_BOOK_SEARCH", payload: [] });
+    }, []);
+
+    useEffect(() => {
+        const ele = document.querySelector("#onSearch");
+        if (ele) {
+            ele.addEventListener("keypress", function (e) {
+                if (e.key === "Enter") {
+                    if (newBookSearch.length) {
+                        navigate("/search-results");
+                    }
+                }
+            });
+        }
+    }, [newBookSearch.length]);
 
     return (
         <section className="case-studies" id="books-section">
@@ -489,23 +643,6 @@ const BookList = (props) => {
                         id="book_search_home_page_form"
                     >
                         <div className="search-bar">
-                            {/* <div className="dropdown rounded-full advanced-search">
-                                <button
-                                    className="btn btn-secondary dropdown-toggle"
-                                    type="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    Advanced
-                                </button>
-                                <ul className="dropdown-menu">
-                                    <li>
-                                        <input type="checkbox" name="price" />
-                                        <label htmlFor="price">Price</label>
-                                    </li>
-                                </ul>
-                            </div> */}
-
                             <div className="genres">
                                 {/* <label htmlFor="book-genres">Genres</label> */}
                                 <select
@@ -615,6 +752,26 @@ const BookList = (props) => {
                                 </select>
                             </div>
                             <div className="publisher">
+                                <select
+                                    defaultValue={formatId}
+                                    className="form-select"
+                                    aria-label="Select Language."
+                                    onChange={formatOnChange}
+                                >
+                                    <option>Search By Format</option>
+                                    {[
+                                        { id: 1, name: "Book" },
+                                        { id: 3, name: "E-Book" },
+                                    ].map((language, i) => {
+                                        return (
+                                            <option key={i} value={language.id}>
+                                                {language.name}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                            <div className="publisher">
                                 {/* <label htmlFor="book-publisher">Publisher</label> */}
                                 <select
                                     defaultValue={libraryId}
@@ -643,55 +800,14 @@ const BookList = (props) => {
                             </div>
 
                             <div className="searchByBook">
-                                {/* <div className="dropdown rounded-full">
-                                    <button
-                                        className="btn btn-secondary dropdown-toggle"
-                                        type="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                    >
-                                        {filter.toUpperCase()}
-                                    </button>
-                                    <ul className="dropdown-menu">
-                                        <li>
-                                            <button
-                                                className="dropdown-item"
-                                                id="book"
-                                                onClick={(e) => handleFilter(e)}
-                                            >
-                                                Book
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button
-                                                className="dropdown-item"
-                                                id="author"
-                                                onClick={(e) => handleFilter(e)}
-                                            >
-                                                Author
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div> */}
-                                <ReactSearchAutocomplete
+                                {/* <ReactSearchAutocomplete
                                     className="auto-complete"
                                     items={filteredBooks}
                                     onSearch={handleOnSearch}
                                     onSelect={handleOnSelect}
                                     autoFocus
-                                    // fuseOptions={{
-                                    //     keys: [
-                                    //         "authors_name",
-                                    //         "authors[0].first_name",
-                                    //         "authors[0].last_name",
-                                    //         "name",
-                                    //     ],
-                                    //     // minMatchCharLength: 6,
-                                    // }}
-                                    // resultStringKeyName="authors_name"
                                     fuseOptions={{
                                         keys: ["name", "isbn"],
-                                        // minMatchCharLength: 6,
                                     }}
                                     styling={{
                                         borderRadius: "12px",
@@ -700,18 +816,41 @@ const BookList = (props) => {
                                     placeholder="Search a Book"
                                     isCaseSensitive={true}
                                     formatResult={formatResult}
+                                /> */}
+                                <input
+                                    id="onSearch"
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Search here..."
+                                    onChange={(e) =>
+                                        handleOnSearch(e.target.value)
+                                    }
                                 />
+                                {newBookSearch.length
+                                    ? formatResult(newBookSearch)
+                                    : null}
                             </div>
                             <div className="reset">
-                                <button
+                                {/* <button
                                     className="btn btn-danger frontend-btn "
+                                    onClick={() => handleOnSearch(inputText)}
+                                >
+                                    <span>Search</span>
+                                </button> */}
+                                <button
+                                    className="btn btn-danger frontend-btn ml-2"
                                     onClick={() => {
-                                        setFilteredBooks(books);
+                                        dispatch({
+                                            type: "NEW_BOOK_SEARCH",
+                                            payload: [],
+                                        });
                                         setGenreId("");
                                         setPublisherId("");
                                         setAuthorId("");
                                         setLanguageId("");
                                         setLanguageId("");
+                                        setFormatId("");
+                                        setInputText("");
                                     }}
                                 >
                                     <span>Reset</span>
@@ -726,8 +865,8 @@ const BookList = (props) => {
                     <div className="col-12 common-heading text-left">
                         <div className="book-count-wrapper">
                             <span className="book-count">
-                                Showing {currentItems.length} of {books.length}{" "}
-                                Books
+                                Showing {currentItems.length} of{" "}
+                                {filteredBooks.length} Books
                             </span>
                         </div>
                     </div>
@@ -740,22 +879,44 @@ const BookList = (props) => {
                     <img src="/public/images/301.gif" />
                 </div>
             )}
-            <ReactPaginate
-                breakLabel="..."
-                nextLabel=">"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel="<"
-                renderOnZeroPageCount={null}
-                forcePage={toPage}
-            />
+
+            <div>
+                <ReactPaginate
+                    breakLabel="..."
+                    nextLabel=">"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={5}
+                    pageCount={pageCount}
+                    previousLabel="<"
+                    renderOnZeroPageCount={null}
+                    forcePage={toPage}
+                />
+                {/* <div className="container d-flex align-items-center justify-content-center gap-3">
+                    <button
+                        className="btn btn-danger"
+                        onClick={() =>
+                            skip <= 10
+                                ? setSkip(0)
+                                : setSkip((prev) => prev - 10)
+                        }
+                    >
+                        Prev
+                    </button>
+                    <button
+                        className="btn btn-danger"
+                        onClick={() => setSkip((prev) => prev + 10)}
+                    >
+                        Next
+                    </button>
+                </div> */}
+            </div>
         </section>
     );
 };
 
 function Books(props) {
     const {
+        fetchBooksByNameOrAuthors,
         books,
         fetchBooksAll,
         fetchGenresWithout,
@@ -766,9 +927,12 @@ function Books(props) {
         publishers,
         authors,
         bookLanguage,
+        newBookSearch,
     } = props;
     const navigate = useNavigate();
     const [filteredBooks, setFilteredBooks] = useState([]);
+    const [skip, setSkip] = useState(0);
+    const [toPage, setToPage] = useState(-1);
     const goTo = (url) => {
         navigate(url);
     };
@@ -786,6 +950,12 @@ function Books(props) {
         setFilteredBooks(books);
     }, [books]);
 
+    // useEffect(() => {
+    //     fetchBooksAll(10, skip);
+    //     setToPage(1);
+    //     window.scroll({ top: 0, behavior: "smooth" });
+    // }, [skip]);
+
     return (
         <>
             <Header getCurrentMember={getCurrentMember} goTo={goTo} />
@@ -793,6 +963,12 @@ function Books(props) {
                 <ProgressBar />
                 <div className="container-fluid">
                     <BookList
+                        toPage={toPage}
+                        setToPage={setToPage}
+                        skip={skip}
+                        setSkip={setSkip}
+                        fetchBooksByNameOrAuthors={fetchBooksByNameOrAuthors}
+                        newBookSearch={newBookSearch}
                         books={books}
                         goTo={goTo}
                         genres={genres}
@@ -810,8 +986,10 @@ function Books(props) {
 }
 
 const mapStateToProps = (state) => {
-    const { books, genres, publishers, authors, bookLanguage } = state;
+    const { books, genres, publishers, authors, bookLanguage, newBookSearch } =
+        state;
     return {
+        newBookSearch,
         books: books,
         genres:
             genres.length &&
@@ -840,6 +1018,7 @@ const mapStateToProps = (state) => {
 export default connect(
     mapStateToProps,
     {
+        fetchBooksByNameOrAuthors,
         fetchBookLanguagesWithout,
         fetchAuthorsWithoutToken,
         fetchGenresWithout,
