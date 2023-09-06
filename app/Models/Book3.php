@@ -112,8 +112,24 @@ class Book3 extends Model
      */
     public function getImagePathAttribute()
     {
-        if (!empty($this->image)) {
-            return $this->imageUrl(self::IMAGE_PATH . DIRECTORY_SEPARATOR . $this->image);
+
+        if ($this->library_id === 111) {
+            if (!empty($this->image)) {
+                return $this->imageUrl(self::IMAGE_PATH . DIRECTORY_SEPARATOR . $this->image);
+                // return "https://dindayalupadhyay.smartcitylibrary.com/uploads/books/" . $this->image;
+            }
+        } elseif ($this->library_id === 222) {
+            if (!empty($this->image)) {
+                return "https://kundanlalgupta.smartcitylibrary.com/uploads/books/" . $this->image;
+            }
+        } elseif ($this->library_id === 333) {
+            if (!empty($this->image)) {
+                return "https://rashtramatakasturba.smartcitylibrary.com/uploads/books/" . $this->image;
+            }
+        } else {
+            if (!empty($this->image)) {
+                return $this->imageUrl(self::IMAGE_PATH . DIRECTORY_SEPARATOR . $this->image);
+            }
         }
     }
 

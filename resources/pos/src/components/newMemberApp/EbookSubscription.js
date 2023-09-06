@@ -143,10 +143,6 @@ const EbookSubscription = (props) => {
     useEffect(() => {
         fetchEBookRequests();
         fetchEbookSubscription();
-
-        const from = moment().format("YYYY-MM-DD");
-
-        console.log({ ebooks, member, from });
     }, []);
 
     return (
