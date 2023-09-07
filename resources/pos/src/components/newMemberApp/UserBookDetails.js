@@ -964,74 +964,108 @@ const BookDetails = (props) => {
                                                         </button>
                                                     )
                                                 ) : (
-                                                    <button
-                                                        type="button"
-                                                        className={`frontend-btn ${
-                                                            ebookSub &&
-                                                            moment(
-                                                                ebookSub.returned_on
-                                                            ).format(
-                                                                "YYYY-MM-DD"
-                                                            ) <
-                                                                moment().format(
-                                                                    "YYYY-MM-DD"
-                                                                )
-                                                                ? "btn-danger"
-                                                                : "btn-warning"
-                                                        }`}
-                                                        disabled={
-                                                            !isAvailable &&
-                                                            ebookSub &&
-                                                            moment(
-                                                                ebookSub.returned_on
-                                                            ).format(
-                                                                "YYYY-MM-DD"
-                                                            ) >
-                                                                moment().format(
-                                                                    "YYYY-MM-DD"
-                                                                )
-                                                                ? true
-                                                                : false
-                                                        }
-                                                        onClick={() =>
-                                                            handleSubscribe(
-                                                                book.id,
-                                                                book.book
-                                                                    .library_id
-                                                            )
-                                                        }
-                                                    >
-                                                        <span>
-                                                            {" "}
-                                                            {ebookSubscription.length >
-                                                                0 &&
-                                                            ebookSub &&
-                                                            !(
-                                                                moment(
-                                                                    ebookSub.returned_on
-                                                                ).format(
-                                                                    "YYYY-MM-DD"
-                                                                ) <
-                                                                moment().format(
-                                                                    "YYYY-MM-DD"
-                                                                )
-                                                            )
-                                                                ? "Ebook is Subscribed"
-                                                                : ebookSub &&
-                                                                  moment(
-                                                                      ebookSub.returned_on
-                                                                  ).format(
-                                                                      "YYYY-MM-DD"
-                                                                  ) <
-                                                                      moment().format(
-                                                                          "YYYY-MM-DD"
+                                                    // <button
+                                                    //     type="button"
+                                                    //     className={`frontend-btn ${
+                                                    //         ebookSub &&
+                                                    //         moment(
+                                                    //             ebookSub.returned_on
+                                                    //         ).format(
+                                                    //             "YYYY-MM-DD"
+                                                    //         ) <
+                                                    //             moment().format(
+                                                    //                 "YYYY-MM-DD"
+                                                    //             )
+                                                    //             ? "btn-danger"
+                                                    //             : "btn-warning"
+                                                    //     }`}
+                                                    //     disabled={
+                                                    //         !isAvailable &&
+                                                    //         ebookSub &&
+                                                    //         moment(
+                                                    //             ebookSub.returned_on
+                                                    //         ).format(
+                                                    //             "YYYY-MM-DD"
+                                                    //         ) >
+                                                    //             moment().format(
+                                                    //                 "YYYY-MM-DD"
+                                                    //             )
+                                                    //             ? true
+                                                    //             : false
+                                                    //     }
+                                                    //     onClick={() =>
+                                                    //         handleSubscribe(
+                                                    //             book.id,
+                                                    //             book.book
+                                                    //                 .library_id
+                                                    //         )
+                                                    //     }
+                                                    // >
+                                                    //     <span>
+                                                    //         {" "}
+                                                    //         {ebookSubscription.length >
+                                                    //             0 &&
+                                                    //         ebookSub &&
+                                                    //         !(
+                                                    //             moment(
+                                                    //                 ebookSub.returned_on
+                                                    //             ).format(
+                                                    //                 "YYYY-MM-DD"
+                                                    //             ) <
+                                                    //             moment().format(
+                                                    //                 "YYYY-MM-DD"
+                                                    //             )
+                                                    //         )
+                                                    //             ? "Ebook is Subscribed"
+                                                    //             : ebookSub &&
+                                                    //               moment(
+                                                    //                   ebookSub.returned_on
+                                                    //               ).format(
+                                                    //                   "YYYY-MM-DD"
+                                                    //               ) <
+                                                    //                   moment().format(
+                                                    //                       "YYYY-MM-DD"
+                                                    //                   )
+                                                    //             ? "Book is Expired want to Renew"
+                                                    //             : isAvailable
+                                                    //             ? "Subscribe"
+                                                    //             : "Unavailable"}
+                                                    //     </span>
+                                                    // </button>
+                                                    <a
+                                                        target="_blank"
+                                                        href={
+                                                            book?.book
+                                                                ?.library_id ===
+                                                            111
+                                                                ? "https://dindayalupadhyay.smartcitylibrary.com/" +
+                                                                  location.href.slice(
+                                                                      location.href.lastIndexOf(
+                                                                          "#"
                                                                       )
-                                                                ? "Book is Expired want to Renew"
-                                                                : isAvailable
-                                                                ? "Subscribe"
-                                                                : "Unavailable"}
-                                                        </span>
-                                                    </button>
+                                                                  )
+                                                                : book?.book
+                                                                      ?.library_id ===
+                                                                  222
+                                                                ? "https://kundanlalgupta.smartcitylibrary.com/" +
+                                                                  location.href.slice(
+                                                                      location.href.lastIndexOf(
+                                                                          "#"
+                                                                      )
+                                                                  )
+                                                                : "https://rashtramatakasturba.smartcitylibrary.com/" +
+                                                                  location.href.slice(
+                                                                      location.href.lastIndexOf(
+                                                                          "#"
+                                                                      )
+                                                                  )
+                                                        }
+                                                        className="frontend-btn"
+                                                    >
+                                                        {book.format == 3
+                                                            ? "Subscribe"
+                                                            : "Reserve"}
+                                                    </a>
                                                 )}
                                                 {(ebookSub ||
                                                     ebookSub?.length > 0) &&

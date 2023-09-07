@@ -286,17 +286,20 @@ const BookDetails = (props) => {
                                         <p className="author_name specifications">
                                             <span>Belongs To: </span>
                                             {book?.book?.library_id === 111 ? (
-                                                <span className="badge badge-success">
-                                                    L1
+                                                <span className="badge badge-danger">
+                                                    Dindayal Upadhyay Digital
+                                                    Library
                                                 </span>
                                             ) : book?.book?.library_id ===
                                               222 ? (
                                                 <span className="badge badge-danger">
-                                                    L2
+                                                    Kundanlal Gupta Digital
+                                                    Library
                                                 </span>
                                             ) : (
-                                                <span className="badge badge-primary">
-                                                    L3
+                                                <span className="badge badge-danger">
+                                                    Rashtramata Kasturba Digital
+                                                    Library
                                                 </span>
                                             )}
                                         </p>
@@ -364,12 +367,27 @@ const BookDetails = (props) => {
                                         <a
                                             target="_blank"
                                             href={
-                                                "https://elibrary.veerit.com/" +
-                                                location.href.slice(
-                                                    location.href.lastIndexOf(
-                                                        "#"
-                                                    )
-                                                )
+                                                book?.book?.library_id === 111
+                                                    ? "https://dindayalupadhyay.smartcitylibrary.com/" +
+                                                      location.href.slice(
+                                                          location.href.lastIndexOf(
+                                                              "#"
+                                                          )
+                                                      )
+                                                    : book?.book?.library_id ===
+                                                      222
+                                                    ? "https://kundanlalgupta.smartcitylibrary.com/" +
+                                                      location.href.slice(
+                                                          location.href.lastIndexOf(
+                                                              "#"
+                                                          )
+                                                      )
+                                                    : "https://rashtramatakasturba.smartcitylibrary.com/" +
+                                                      location.href.slice(
+                                                          location.href.lastIndexOf(
+                                                              "#"
+                                                          )
+                                                      )
                                             }
                                             className="frontend-btn"
                                         >
