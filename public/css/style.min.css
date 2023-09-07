@@ -16795,3 +16795,17 @@ a:focus {
     max-height: 200px;
     overflow-y: scroll;
 }
+
+#book_search_home_page_form input.form-control {
+    height: 44px;
+    border: 0px !important;
+    min-height: unset;
+    position: relative;
+    top: 0px;
+    border-radius: 12px !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    padding: 0px 13px !important;
+    color: #000;
+    box-shadow: unset !important;
+}
