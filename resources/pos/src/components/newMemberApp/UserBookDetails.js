@@ -886,7 +886,26 @@ const BookDetails = (props) => {
                                             {!ebookSub && isAvailable ? (
                                                 <p>
                                                     Ebook version of this book
-                                                    is available. <br></br>
+                                                    is available in{" "}
+                                                    {book.book.library_id ===
+                                                    111 ? (
+                                                        <span className="badge badge-info">
+                                                            Dindayal Upadhyay
+                                                            Digital Library
+                                                        </span>
+                                                    ) : book.book.library_id ===
+                                                      222 ? (
+                                                        <span className="badge badge-info">
+                                                            Kundanlal Gupta
+                                                            Digital Library
+                                                        </span>
+                                                    ) : (
+                                                        <span className="badge badge-info">
+                                                            Rashtramata Kasturba
+                                                            Digital Library
+                                                        </span>
+                                                    )}
+                                                    . <br></br>
                                                     Please click on the below
                                                     button to subscribe.
                                                 </p>
