@@ -702,7 +702,7 @@ body:not(.frontend) .modal-content button.close span {
 
 .dashboard__card-wrapper .dashboard__card-title {
     width: calc(100% - 65px);
-    white-space: unset !IMPORTANT;
+    white-space: unset !important;
     text-align: right !important;
     overflow: hidden;
 }
@@ -723,7 +723,7 @@ body div:not(.admin-wrapper) #books-section .search-bar .wrapper {
 
 .book-detail-form-card__primary-details .react-select__input.react-select__input--primary .css-1g6gooi {
     margin: 0px !important;
-    padding: 0px !IMPORTANT;
+    padding: 0px !important;
 }
 
 .book-detail-form-card__primary-details .react-select__input.react-select__input--primary .css-1hwfws3 {
@@ -1801,7 +1801,7 @@ body div:not(.admin-wrapper) #books-section .search-bar .wrapper {
 }
 
 .book-form .react-select.form-group .react-select__input {
-    width: 100% !IMPORTANT;
+    width: 100% !important;
 }
 
 .table-bordered,
@@ -2670,10 +2670,10 @@ textarea.form-control.is-invalid {
 }
 
 .pro-sidebar button.btn {
-    padding: 0px !IMPORTANT;
+    padding: 0px !important;
     background: transparent !important;
     font-size: 1.375rem !important;
-    border: 0px !IMPORTANT;
+    border: 0px !important;
 }
 
 .admin-wrapper .header button#dropdown-basic {
@@ -3401,12 +3401,12 @@ input[type="submit"].btn-block {
 }
 
 .frontend .dropdown-menu.show {
-    display: block !IMPORTANT;
-    opacity: 1 !IMPORTANT;
+    display: block !important;
+    opacity: 1 !important;
     visibility: visible !important;
     transform: unset !important;
     top: 100% !important;
-    left: 0px !IMPORTANT;
+    left: 0px !important;
 }
 
 /* hh */
@@ -11377,7 +11377,7 @@ button.btn.btn-white.back_btn.frontend-btn {
 body:not(.frontend) .image__holder,
 .admin-wrapper .image__favicon-holder {
     background: transparent;
-    box-shadow: unset !IMPORTANT;
+    box-shadow: unset !important;
     width: auto;
 }
 
@@ -11419,7 +11419,7 @@ body:not(.frontend) .image__holder .dropdown,
     position: unset;
     background: transparent !important;
     margin: 0px !important;
-    justify-content: flex-start !IMPORTANT;
+    justify-content: flex-start !important;
     display: flex !important;
 }
 
@@ -11434,10 +11434,10 @@ body:not(.frontend) .image__holder .dropdown .image__dropdown-menu.dropdown-menu
 .admin-wrapper .image__favicon-holder .dropdown .dropdown-menu {
     position: unset !important;
     opacity: 1 !important;
-    visibility: visible !IMPORTANT;
+    visibility: visible !important;
     background: transparent !important;
-    box-shadow: unset !IMPORTANT;
-    margin: 0px !IMPORTANT;
+    box-shadow: unset !important;
+    margin: 0px !important;
     min-width: unset;
     display: flex !important;
     z-index: 1;
@@ -11472,7 +11472,7 @@ body:not(.frontend) .image__holder .dropdown .image__dropdown-menu.dropdown-menu
     margin-bottom: 10px;
     text-align: center !important;
     display: flex;
-    justify-content: center !IMPORTANT;
+    justify-content: center !important;
     align-items: center;
     width: auto;
     transition: 0.3s all ease;
@@ -11501,7 +11501,7 @@ body:not(.frontend) .image__holder .dropdown .image__dropdown-menu.dropdown-menu
     transition: 0.3s all ease;
     text-align: center !important;
     display: flex;
-    justify-content: center !IMPORTANT;
+    justify-content: center !important;
     align-items: center;
     width: auto;
 }
@@ -11825,11 +11825,11 @@ body div:not(.admin-wrapper) #books-section .form-select {
 }
 
 body .search-bar .wrapper input {
-    height: auto !IMPORTANT;
-    min-height: unset !IMPORTANT;
+    height: auto !important;
+    min-height: unset !important;
     width: 100%;
-    padding: 0px 13px 0px 13px !IMPORTANT;
-    font-size: 14px !IMPORTANT;
+    padding: 0px 13px 0px 13px !important;
+    font-size: 14px !important;
 }
 
 body div:not(.admin-wrapper) #books-section .search-bar .wrapper>div {
@@ -11924,7 +11924,7 @@ button.btn.erp:hover {
     /* .header-small .banner #book_search_home_page_form {
         position: fixed;
         top: 80px;
-        width: 100% !IMPORTANT;
+        width: 100% !important;
         background: #f5ebe6;
         left: 0px;
         padding: 5px 15px 15px 15px;
@@ -12275,7 +12275,7 @@ button.btn.erp:hover {
 }
 
 .css-b8ldur-Input {
-    padding: 0px !IMPORTANT;
+    padding: 0px !important;
 }
 
 .btn-opacity-dark {
@@ -13033,7 +13033,7 @@ svg.svg-inline--fa.fa-magnifying-glass {
 }
 
 button.btn.btn-primary.ml-2:focus {
-    border: 0px !IMPORTANT;
+    border: 0px !important;
     border-radius: 0px !important;
 }
 
@@ -14630,7 +14630,7 @@ body .search-bar .wrapper>div:nth-child(2) ul {
 } */
 .member_books_history button.frontend-btn,
 .member_ebooks .btn {
-    padding-left: 15px !IMPORTANT;
+    padding-left: 15px !important;
     padding-right: 15px !important;
 }
 
@@ -14721,7 +14721,7 @@ body .search-bar .wrapper input,
 
 .admin-wrapper .rdt_TableCell .dropdown button:hover,
 .admin-wrapper .rdt_TableCell .dropdown button:focus {
-    background: transparent !IMPORTANT;
+    background: transparent !important;
     border: 0px !important;
 }
 
@@ -14785,7 +14785,7 @@ body .search-bar {
     display: inline-block;
     margin-left: 0.255em;
     vertical-align: 0.255em;
-    content: "" !IMPORTANT;
+    content: "" !important;
     border-top: 0.3em solid;
     border-right: 0.3em solid transparent;
     border-bottom: 0;
@@ -14865,7 +14865,7 @@ body a:hover {
 
 .dashboard__card-wrapper .dashboard__card-title {
     width: calc(100% - 65px);
-    white-space: unset !IMPORTANT;
+    white-space: unset !important;
     text-align: right !important;
     overflow: hidden;
 }
@@ -15139,16 +15139,16 @@ button.frontend-btn {
 }
 
 .css-1pahdxg-control {
-    padding: 0px !IMPORTANT;
+    padding: 0px !important;
 }
 
 .css-1pahdxg-control {
     border: 0px !important;
-    box-shadow: unset !IMPORTANT;
+    box-shadow: unset !important;
 }
 
 button#dropdown-basic {
-    border: 0px !IMPORTANT;
+    border: 0px !important;
     outline: unset !important;
 }
 
@@ -15563,7 +15563,7 @@ nav.sc-hSdWYo.gffxzj.rdt_Pagination {
 
 .frontend .common-container .rdt_TableBody .rdt_TableRow {
     background: transparent !important;
-    border-top: 1px solid #f5ebe6 !IMPORTANT;
+    border-top: 1px solid #f5ebe6 !important;
     border-bottom: 0px;
 }
 
@@ -15668,12 +15668,12 @@ nav.sc-hSdWYo.gffxzj.rdt_Pagination {
 }
 
 .frontend .modal .react-select__input .css-1hwfws3 {
-    font-size: 16px !IMPORTANT;
+    font-size: 16px !important;
     padding: 0px 0px 0px 45px !important;
 }
 
 .frontend .modal .react-select__input .css-1hwfws3 input {
-    border: 0px !IMPORTANT;
+    border: 0px !important;
 }
 
 .frontend .modal .input-group .react-select__input {
@@ -15734,7 +15734,7 @@ body .search-bar .wrapper {
 
 section#pdf-section input {
     text-align: center;
-    box-shadow: unset !IMPORTANT;
+    box-shadow: unset !important;
     border-radius: 0px !important;
     width: 50px;
     padding: 0px 0px 0px 12px !important;
@@ -15772,7 +15772,7 @@ body:not(.frontend) .navbar-nav div a.dropdown-item {
     .pdf-modal .react-pdf__Document,
     .pdf-modal .react-pdf__Document canvas {
         max-width: 100%;
-        height: auto !IMPORTANT;
+        height: auto !important;
     }
 
     section#pdf-section .control-panel span {
@@ -15809,7 +15809,7 @@ body:not(.frontend) .navbar-nav div a.dropdown-item {
         display: flex !important;
         /* flex-direction: column; */
         margin: 0px -10px !important;
-        padding: 25px 0px !IMPORTANT;
+        padding: 25px 0px !important;
         justify-content: center !important;
     }
 
@@ -15839,7 +15839,7 @@ body:not(.frontend) .navbar-nav div a.dropdown-item {
     }
 
     #books-section .searchByBook {
-        padding-left: 90px !IMPORTANT;
+        padding-left: 90px !important;
     }
 
     #book_search_home_page_form {
@@ -15900,7 +15900,7 @@ body:not(.frontend) .navbar-nav div a.dropdown-item {
     .book-details .product_content {
         padding: 25px 0px !important;
         margin-bottom: 0px !important;
-        padding-bottom: 0px !IMPORTANT;
+        padding-bottom: 0px !important;
     }
 
     .book-details .product_img {
@@ -16201,7 +16201,7 @@ code {
 
 .admin-wrapper .react-select__input .css-yk16xz-control,
 .admin-wrapper .react-select__input .css-1pahdxg-control {
-    padding-left: 15px !IMPORTANT;
+    padding-left: 15px !important;
     min-height: 45px !important;
 }
 
@@ -16225,12 +16225,12 @@ body:not(.frontend) .input-group-prepend {
 }
 
 .admin-wrapper .react-select__input .css-g1d714-ValueContainer {
-    padding: 0px !IMPORTANT;
+    padding: 0px !important;
 }
 
 .admin-wrapper .css-1hwfws3,
 .admin-wrapper .css-1g6gooi {
-    padding: 0px 0px !IMPORTANT;
+    padding: 0px 0px !important;
     margin: 0px !important;
 }
 
@@ -16332,7 +16332,7 @@ body:not(.frontend) .input-group-prepend {
 }
 
 .frontend .table-bordered {
-    border: 0px !IMPORTANT;
+    border: 0px !important;
 }
 
 .rdt_TableCell button.btn.btn-primary {
@@ -16477,9 +16477,9 @@ a:focus {
     border-radius: 12px !important;
     border-top-left-radius: 0px !important;
     border-bottom-left-radius: 0px !important;
-    padding: 0px 13px !IMPORTANT;
+    padding: 0px 13px !important;
     color: #000;
-    box-shadow: unset !IMPORTANT;
+    box-shadow: unset !important;
 }
 
 .form-result {
