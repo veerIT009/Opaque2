@@ -267,6 +267,44 @@ function About(props) {
                     </div>
                 </div>
             </section>
+            <section className="container">
+                <div className="d-flex flex-column align-items-start">
+                    <h1>Tag Line </h1>
+                    <div className="d-flex flex-column align-items-center ml-5">
+                        <p className="p-0 m-0">
+                            - Where Information Comes Alive
+                        </p>
+                        <p className="p-0 m-0">or</p>
+                        <p className="p-0 m-0">- Go Anywhere, read every day</p>
+                    </div>
+                </div>
+                <div>
+                    <h1>Content</h1>
+                    <p>
+                        Smart City Digital Library is the online repository of
+                        knowledge, where it is easy to discover the knowledge
+                        from available recourse with search/browse facilities.
+                        It is an innovative project mentored by Nagpur Smart and
+                        Sustainable City Development Corporation Limited under
+                        the Smart City Mission of Ministry of Housing and Urban
+                        Affairs (MoHUA), Government of India. The objective of
+                        this ambitious solution is to ease the access of the
+                        readers to the right resources on the go with minimum
+                        efforts. Smart City&apos;s Digital Library provides
+                        Study resources that benefit all age group users, School
+                        and College students, aspirants preparing for
+                        competitive exams, Researchers and general learners.
+                        This Digital Library is designed to hold content of
+                        English, Hindi, Marathi languages. Under this project
+                        traditional Libraries of Nagpur Municipal Corporation
+                        are being converted to Digital libraries with the
+                        facilities to have access to the resources worldwide.
+                        The library is equipped with smart devices which
+                        facilitates differently-able learners to gain the
+                        knowledge of their choice
+                    </p>
+                </div>
+            </section>
             <section
                 id="achievements"
                 className="section-padding achievement bg-one"
