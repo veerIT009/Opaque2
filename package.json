@@ -144,6 +144,7 @@
         "react-stripe-checkout": "^2.6.3",
         "react-to-print": "^2.14.6",
         "react-toastify": "^5.4.0",
+        "react-tooltip": "^5.25.0",
         "react-topbar-progress-indicator": "^2.0.0",
         "react-transition-group": "^4.4.5",
         "react-viewer": "^3.2.2",

@@ -2099,6 +2099,10 @@ img#loader-welcome,
     .table-responsive-md > .table-bordered {
         border: 0;
     }
+
+    #book_search_home_page_form input.form-control {
+        padding: 0px 13px 0px 20px !important;
+    }
 }
 
 @media (max-width: 991.98px) {
@@ -14472,7 +14476,7 @@ input[type="email"] {
     }
 
     section {
-        padding: 50px 0px;
+        padding: 0px 0px;
     }
 
     body .search-bar {
@@ -14935,9 +14939,10 @@ body .search-bar {
     max-width: 100%;
     padding: 0px 0px 0px 0px !important;
     display: flex;
-    margin-bottom: 100px;
+    margin-bottom: 15px;
     flex-wrap: wrap;
     justify-content: center;
+    height: auto;
 }
 
 .publisher::before,
@@ -16553,11 +16558,15 @@ a:focus {
     outline: unset !important;
 }
 
+<<<<<<< Updated upstream
 .pro-sidebar
     .pro-menu
     .pro-menu-item.pro-sub-menu.pro-active-sub
     > div
     > .pro-item-content {
+=======
+.pro-sidebar .pro-menu .pro-menu-item.pro-sub-menu.pro-active-sub>div>.pro-item-content {
+>>>>>>> Stashed changes
     color: #fff !important;
 }
 
@@ -16796,6 +16805,7 @@ a:focus {
     overflow-y: scroll;
 }
 
+<<<<<<< Updated upstream
 #book_search_home_page_form input.form-control {
     height: 44px;
     border: 0px !important;
@@ -16809,3 +16819,54 @@ a:focus {
     color: #000;
     box-shadow: unset !important;
 }
+=======
+button.frontend-btn:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.publisher {
+    position: relative !important;
+}
+
+.publisher .form-select {
+    background-image: none !important;
+}
+
+#pdf-section {
+    padding: 0 !important;
+}
+
+body .table-responsive {
+    overflow-x: inherit !important;
+}
+
+#book_search_home_page_form .form-group {
+    margin-bottom: 0px !important;
+}
+
+#book_search_home_page_form .css-1g6gooi {
+    height: 30px;
+}
+
+.pdf-modal {
+    height: 700px !important;
+    overflow-y: scroll !important;
+}
+
+.pagebreak {
+    clear: both;
+    min-height: 1px;
+    page-break-after: always;
+}
+
+.frontend #book_search_home_page_form .form-group input {
+    padding: 0px !important;
+    line-height: 1em !important;
+    height: 30px !important;
+}
+
+::-webkit-scrollbar {
+    width: 12px !important;
+}
+>>>>>>> Stashed changes
